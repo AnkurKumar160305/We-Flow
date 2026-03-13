@@ -1,0 +1,137 @@
+/* Column CSS */
+.kanban-column {
+  flex: 1;
+  min-width: 280px;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+
+/* Column Header */
+.col-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s3) var(--s4);
+  background: var(--sur-00);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-md);
+  border-top: 3px solid var(--col-color, var(--ink-40));
+}
+
+.col-header-left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.col-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.col-dot.pulse {
+  animation: colPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes colPulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%       { transform: scale(1.5); opacity: 0.6; }
+}
+
+.col-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.col-count {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 400;
+  padding: 1px 6px;
+  border: 1px solid currentColor;
+  border-radius: var(--r-pill);
+  opacity: 0.7;
+}
+
+.col-add-btn {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: var(--sur-02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-60);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.col-add-btn:hover {
+  background: var(--brand-08);
+  color: var(--brand);
+}
+
+/* Task list */
+.col-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 280px);
+  padding-bottom: var(--s4);
+  padding-right: 2px;
+}
+
+/* Category section divider */
+.col-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+}
+
+.col-section-label {
+  font-family: var(--font-main);
+  font-weight: 800;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--ink-20);
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+}
+
+.col-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-light);
+}
+
+/* Empty state */
+.col-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s3);
+  padding: var(--s8) var(--s4);
+  border: 1.5px dashed var(--border-light);
+  border-radius: var(--r-md);
+  text-align: center;
+  color: var(--ink-40);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.col-empty-add {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand);
+  transition: opacity var(--t-fast);
+}
+
+.col-empty-add:hover { opacity: 0.7; }

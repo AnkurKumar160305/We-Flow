@@ -1,0 +1,188 @@
+/* KanbanBoard Layout */
+.board-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  padding: var(--s5) var(--s6) var(--s6);
+  background: var(--sur-01);
+  min-height: calc(100vh - 50px);
+}
+
+/* === Sprint Bar === */
+.sprint-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--s6);
+  background: var(--sur-00);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-md);
+  padding: var(--s3) var(--s5);
+  flex-wrap: wrap;
+}
+
+.sprint-bar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  flex-shrink: 0;
+}
+
+.sprint-active-badge {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--success);
+  letter-spacing: 0.5px;
+}
+
+.sprint-name {
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--ink-100);
+}
+
+.sprint-dates {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink-40);
+}
+
+.sprint-bar-mid {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  flex: 1;
+  min-width: 160px;
+}
+
+.sprint-progress-track {
+  flex: 1;
+  height: 5px;
+  background: var(--sur-03);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+
+.sprint-progress-fill {
+  height: 100%;
+  background: var(--brand);
+  border-radius: var(--r-full);
+  transition: width 0.6s var(--ease);
+}
+
+.sprint-progress-pct {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink-60);
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.sprint-bar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.sprint-col-chip {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  padding: 2px 8px;
+  background: var(--sur-02);
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+
+.sprint-members {
+  display: flex;
+  align-items: center;
+}
+
+.sprint-member-chip {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--sur-00);
+  margin-left: -6px;
+}
+
+.sprint-member-chip:first-child { margin-left: 0; }
+.sprint-member-chip.more { background: var(--sur-03); color: var(--ink-60); font-size: 8px; font-weight: 800; }
+
+/* === Stat Card Row === */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s4);
+}
+
+.stat-card {
+  background: var(--sur-00);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.stat-card-top {
+  height: 3px;
+  background: var(--stat-color, var(--brand));
+}
+
+.stat-card-body {
+  padding: var(--s4) var(--s5);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-card-num {
+  font-weight: 900;
+  font-size: 26px;
+  line-height: 1;
+  font-family: var(--font-mono);
+}
+
+.stat-card-label {
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--ink-40);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* === Board + Tray Layout === */
+.board-and-tray {
+  display: flex;
+  gap: var(--s5);
+  align-items: flex-start;
+  flex: 1;
+}
+
+.kanban-columns {
+  display: flex;
+  gap: var(--s4);
+  flex: 1;
+  overflow-x: auto;
+  padding-bottom: var(--s2);
+}
+
+/* Loading state */
+.board-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s4);
+  padding: var(--s12);
+  color: var(--ink-40);
+  font-size: 13px;
+  font-weight: 600;
+  width: 100%;
+}

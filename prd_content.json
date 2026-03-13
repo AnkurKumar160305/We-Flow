@@ -1,0 +1,1895 @@
+[
+  {
+    "type": "paragraph",
+    "text": "PRODUCT REQUIREMENTS DOCUMENT"
+  },
+  {
+    "type": "paragraph",
+    "text": "WeFlow V5"
+  },
+  {
+    "type": "paragraph",
+    "text": "Sprint Management OS \u2014 SaaS Edition"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Document Version",
+        "5.0"
+      ],
+      [
+        "Status",
+        "DRAFT \u2014 For Internal Review"
+      ],
+      [
+        "Date",
+        "March 2026"
+      ],
+      [
+        "Owner",
+        "WeFlow Product Team"
+      ],
+      [
+        "Classification",
+        "Internal \u2014 Confidential"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "Think Beyond, Create Impact"
+  },
+  {
+    "type": "paragraph",
+    "text": "Table of Contents"
+  },
+  {
+    "type": "paragraph",
+    "text": "1.  Executive Summary\t3"
+  },
+  {
+    "type": "paragraph",
+    "text": "2.  Product Vision\t4"
+  },
+  {
+    "type": "paragraph",
+    "text": "3.  Target Users & Roles\t5"
+  },
+  {
+    "type": "paragraph",
+    "text": "4.  Authentication & Onboarding\t7"
+  },
+  {
+    "type": "paragraph",
+    "text": "5.  Main Board \u2014 Kanban\t9"
+  },
+  {
+    "type": "paragraph",
+    "text": "6.  Task Lifecycle\t11"
+  },
+  {
+    "type": "paragraph",
+    "text": "7.  Notifications & Realtime\t13"
+  },
+  {
+    "type": "paragraph",
+    "text": "8.  Settings & Configuration\t14"
+  },
+  {
+    "type": "paragraph",
+    "text": "9.  Database Schema\t16"
+  },
+  {
+    "type": "paragraph",
+    "text": "10.  Design System\t18"
+  },
+  {
+    "type": "paragraph",
+    "text": "11.  Pricing & Plans\t20"
+  },
+  {
+    "type": "paragraph",
+    "text": "12.  Deployment Stack\t21"
+  },
+  {
+    "type": "paragraph",
+    "text": "13.  Changes From V4\t22"
+  },
+  {
+    "type": "paragraph",
+    "text": "14.  Future Backlog\t23"
+  },
+  {
+    "type": "paragraph",
+    "text": "1. Executive Summary"
+  },
+  {
+    "type": "paragraph",
+    "text": "WeFlow V5 is a standalone, multi-tenant Sprint Management SaaS platform built for creative teams. It evolves from WeFlow V4 \u2014 an internal InHive-only tool \u2014 into a product any team can sign up for, brand, and use independently."
+  },
+  {
+    "type": "paragraph",
+    "text": "What Changed from V4"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Feature",
+        "V5 (SaaS Product)"
+      ],
+      [
+        "Authentication",
+        "Email + Password + OTP"
+      ],
+      [
+        "Branding",
+        "Dynamic workspace branding"
+      ],
+      [
+        "Multi-tenancy",
+        "Full workspace_id scoping"
+      ],
+      [
+        "Onboarding",
+        "3-step wizard on signup"
+      ],
+      [
+        "Roles",
+        "Creator / Co-Creator / Observer"
+      ],
+      [
+        "Billing",
+        "Stripe subscription portal"
+      ],
+      [
+        "Invite System",
+        "Role-specific token links"
+      ],
+      [
+        "Entry UI",
+        "Standard login / signup"
+      ],
+      [
+        "Sidebar",
+        "Workspace-agnostic nav"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "Core Value Proposition"
+  },
+  {
+    "type": "paragraph",
+    "text": "One tool from sprint kick-off to task completion \u2014 no app switching"
+  },
+  {
+    "type": "paragraph",
+    "text": "Personality-aware roles (Creator vs Co-Creator) built into the approval workflow"
+  },
+  {
+    "type": "paragraph",
+    "text": "Real-time sync across all team members via Supabase Realtime channels"
+  },
+  {
+    "type": "paragraph",
+    "text": "Clean, opinionated design system \u2014 monochrome + semantic column colours"
+  },
+  {
+    "type": "paragraph",
+    "text": "2. Product Vision"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Mission",
+        "Give every creative team a focused, friction-free sprint OS \u2014 built for makers, not managers."
+      ],
+      [
+        "Vision",
+        "Become the default project OS for India's early-stage creator economy, then scale globally."
+      ],
+      [
+        "North Star",
+        "1,000 active workspaces with weekly sprint activity within 6 months of public launch."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "Who It Is For"
+  },
+  {
+    "type": "paragraph",
+    "text": "Early-stage startup founding teams (2\u20138 people)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Creative project groups \u2014 filmmakers, designers, musicians, engineers"
+  },
+  {
+    "type": "paragraph",
+    "text": "Campus teams participating in hackathons or competitions"
+  },
+  {
+    "type": "paragraph",
+    "text": "Indie developers building side projects with collaborators"
+  },
+  {
+    "type": "paragraph",
+    "text": "Who It Is NOT For"
+  },
+  {
+    "type": "paragraph",
+    "text": "Enterprise teams needing JIRA-level complexity"
+  },
+  {
+    "type": "paragraph",
+    "text": "Teams > 20 people without a dedicated PM"
+  },
+  {
+    "type": "paragraph",
+    "text": "Organisations needing SOC2 compliance or SSO on day 1"
+  },
+  {
+    "type": "paragraph",
+    "text": "3. Target Users & Roles"
+  },
+  {
+    "type": "paragraph",
+    "text": "WeFlow V5 has three roles. Roles are fixed per workspace membership \u2014 except Creator who can temporarily toggle to Co-Creator mode per session."
+  },
+  {
+    "type": "paragraph",
+    "text": "Role Overview"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Role",
+        "How They Join",
+        "Key Powers"
+      ],
+      [
+        "Creator",
+        "Signs up OR Creator invite link",
+        "Full board access. Approve/reject tasks. Manage sprint. Invite all roles. Founding Creator also controls branding + billing."
+      ],
+      [
+        "Co-Creator",
+        "Co-Creator invite link only",
+        "Submit tasks for approval. Move own approved tasks. View full board. Cannot invite anyone."
+      ],
+      [
+        "Observer",
+        "Observer invite link only",
+        "Read-only. Cannot interact with any board element. Ideal for stakeholders or clients."
+      ],
+      [
+        "Creator as Co-Creator",
+        "Toggle in profile menu (session only)",
+        "Submits tasks into Pending tray. Cannot approve own submissions. Reverts on page reload."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "Creator \u2014 Full Permission Matrix"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Action",
+        "Allowed"
+      ],
+      [
+        "Add / edit / delete any task on the board",
+        "Yes"
+      ],
+      [
+        "Approve or reject pending tasks from Co-Creators",
+        "Yes"
+      ],
+      [
+        "Approve tasks from Creator-acting-as-Co-Creator",
+        "Yes (any other Creator)"
+      ],
+      [
+        "Configure sprint settings (name, dates, goal)",
+        "Yes"
+      ],
+      [
+        "Send role-specific invite links",
+        "Yes (Creator, Co-Creator, Observer)"
+      ],
+      [
+        "Access Settings drawer \u2014 Sprint, Invites, Team, Milestones tabs",
+        "Yes"
+      ],
+      [
+        "Access Branding tab in Settings",
+        "Founding Creator only"
+      ],
+      [
+        "Access Billing tab in Settings",
+        "Founding Creator only"
+      ],
+      [
+        "Toggle to Co-Creator mode (session only)",
+        "Yes"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "Co-Creator \u2014 Permission Matrix"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Action",
+        "Allowed"
+      ],
+      [
+        "Submit new tasks \u2014 go to Pending tray",
+        "Yes"
+      ],
+      [
+        "Edit own tasks (before approval only)",
+        "Yes"
+      ],
+      [
+        "Move own approved tasks between columns",
+        "Yes"
+      ],
+      [
+        "View the full board and all tasks",
+        "Yes"
+      ],
+      [
+        "Approve or reject any task",
+        "No"
+      ],
+      [
+        "Invite other members",
+        "No"
+      ],
+      [
+        "Access sprint or board settings",
+        "No"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "KEY RULE: When a Creator toggles to Co-Creator mode, any other active Creator in the workspace can approve that session's submitted tasks. The submitting Creator cannot approve their own tasks during that session."
+  },
+  {
+    "type": "paragraph",
+    "text": "4. Authentication & Onboarding"
+  },
+  {
+    "type": "paragraph",
+    "text": "4.1  Signup Flow"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Step",
+        "Screen",
+        "Action",
+        "System"
+      ],
+      [
+        "1",
+        "Login/Signup",
+        "User enters email + password. Clicks \"Create Account\"",
+        "Supabase Auth creates account. Sends OTP email."
+      ],
+      [
+        "2",
+        "OTP Verify",
+        "User enters 6-digit code from email",
+        "Verifies OTP. Creates accounts row. Marks email_verified = true."
+      ],
+      [
+        "3",
+        "Wizard Step 1",
+        "Brand: workspace name, logo upload, accent colour",
+        "Creates workspaces row. Uploads logo to Supabase Storage."
+      ],
+      [
+        "4",
+        "Wizard Step 2",
+        "Sprint: sprint name, start date, end date, North Star goal",
+        "Creates settings row. Sets sprint metadata."
+      ],
+      [
+        "5",
+        "Wizard Step 3",
+        "Invite: optional \u2014 send Creator/Co-Creator invite links",
+        "Generates invite_links tokens per role. Step is skippable."
+      ],
+      [
+        "6",
+        "Board",
+        "First load of main Kanban board",
+        "Loads all workspace data. Plays confetti animation."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "4.2  Login Flow"
+  },
+  {
+    "type": "paragraph",
+    "text": "Returning user \u2014 enters email + password \u2192 board loads directly"
+  },
+  {
+    "type": "paragraph",
+    "text": "Session expired \u2014 detected on load \u2192 redirected to login page"
+  },
+  {
+    "type": "paragraph",
+    "text": "Auto-restore \u2014 valid session token in localStorage \u2192 board loads without login prompt"
+  },
+  {
+    "type": "paragraph",
+    "text": "4.3  Team Invite Join Flow"
+  },
+  {
+    "type": "paragraph",
+    "text": "When a Creator generates an invite link, it is role-scoped and token-based. The flow for a new member joining via link:"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Step",
+        "What Happens"
+      ],
+      [
+        "1",
+        "Invited person opens role-specific invite URL"
+      ],
+      [
+        "2",
+        "Branded join page loads \u2014 shows workspace name, logo, colour"
+      ],
+      [
+        "3",
+        "Person enters name + email. Clicks \"Request to Join\""
+      ],
+      [
+        "4",
+        "System checks token: valid \u2192 creates pending_members row; invalid/expired \u2192 shows error"
+      ],
+      [
+        "5",
+        "Notification sent to all Creators in the workspace"
+      ],
+      [
+        "6",
+        "A Creator opens notification \u2192 sees pending member \u2192 Approves or Declines"
+      ],
+      [
+        "7",
+        "On Approve: creates users row, sends welcome email, member can join board"
+      ],
+      [
+        "8",
+        "On Decline: pending_members row updated, decline notification sent to applicant"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "4.4  Onboarding Wizard Field Specs"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Wizard Step",
+        "Field",
+        "Type",
+        "Required",
+        "DB Target"
+      ],
+      [
+        "Step 1 \u2014 Brand",
+        "Workspace Name",
+        "Text",
+        "Yes",
+        "workspaces.name"
+      ],
+      [
+        "Step 1 \u2014 Brand",
+        "Logo",
+        "Image upload",
+        "No",
+        "workspaces.logo_url"
+      ],
+      [
+        "Step 1 \u2014 Brand",
+        "Accent Colour",
+        "Colour picker (hex)",
+        "No",
+        "workspaces.brand_color"
+      ],
+      [
+        "Step 2 \u2014 Sprint",
+        "Sprint Name",
+        "Text",
+        "Yes",
+        "settings.sprint_name"
+      ],
+      [
+        "Step 2 \u2014 Sprint",
+        "Start Date",
+        "Date picker",
+        "Yes",
+        "settings.sprint_start"
+      ],
+      [
+        "Step 2 \u2014 Sprint",
+        "End Date",
+        "Date picker",
+        "Yes",
+        "settings.sprint_end"
+      ],
+      [
+        "Step 2 \u2014 Sprint",
+        "North Star Goal",
+        "Text (max 120 chars)",
+        "No",
+        "settings.north_star"
+      ],
+      [
+        "Step 3 \u2014 Invite",
+        "Creator Link",
+        "Auto-generated token URL",
+        "No",
+        "invite_links.token"
+      ],
+      [
+        "Step 3 \u2014 Invite",
+        "Co-Creator Link",
+        "Auto-generated token URL",
+        "No",
+        "invite_links.token"
+      ],
+      [
+        "Step 3 \u2014 Invite",
+        "Observer Link",
+        "Auto-generated token URL",
+        "No",
+        "invite_links.token"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "5. Main Board \u2014 Kanban"
+  },
+  {
+    "type": "paragraph",
+    "text": "5.1  Board Layout"
+  },
+  {
+    "type": "paragraph",
+    "text": "The board uses a full-width layout with a fixed nav bar at the top, an optional left sidebar (collapsible), a sprint summary bar, stat cards, and 4 Kanban columns."
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Zone",
+        "Component",
+        "Content"
+      ],
+      [
+        "Top",
+        "Nav Bar (50px)",
+        "Logo | North Star pill | Monday Sync | Spacer | Notifications | Avatar | Settings"
+      ],
+      [
+        "Top",
+        "Sprint Bar",
+        "Sprint name, active badge, date range, progress bar, task counts (by column colour), member chips"
+      ],
+      [
+        "Top",
+        "Stat Row (4 cards)",
+        "To Do count (blue), Doing count (orange), Done count (green), Blocked count (red)"
+      ],
+      [
+        "Main",
+        "Kanban Columns (4)",
+        "To Do | Doing | Done | Blocked \u2014 each with header, 3 sections, task cards, add button"
+      ],
+      [
+        "Right",
+        "Pending Tray",
+        "Tasks awaiting Creator approval. Only visible to Creators."
+      ],
+      [
+        "Right",
+        "Settings Drawer",
+        "Slides in from right. 6 tabs. Overlay on board."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "5.2  Column Colour System"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Column",
+        "Colour",
+        "Hex",
+        "Used On"
+      ],
+      [
+        "To Do",
+        "Blue",
+        "#0A84FF",
+        "Header dot, count badge, card top strip, stat card accent, stat number"
+      ],
+      [
+        "Doing",
+        "Orange",
+        "#F36B21",
+        "Header dot, count badge, card top strip, stat card accent, sprint bar fill"
+      ],
+      [
+        "Done",
+        "Green",
+        "#28A745",
+        "Header dot, count badge, card top strip, card background tint (overrides member tint)"
+      ],
+      [
+        "Blocked",
+        "Red",
+        "#DC3545",
+        "Pulsing header dot, count badge, card top strip, blocker note text + bg, urgent due dates"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "5.3  Kanban Column Sections"
+  },
+  {
+    "type": "paragraph",
+    "text": "Each of the 4 columns is divided into 3 internal sections by category label. Sections are visual dividers only \u2014 they do not affect task state."
+  },
+  {
+    "type": "paragraph",
+    "text": "Product  |  Tech  |  Design  |  Marketing  |  Ops  |  Finance  (all grey tags \u2014 no colour per category)"
+  },
+  {
+    "type": "paragraph",
+    "text": "5.4  Task Card Anatomy"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Element",
+        "Description",
+        "Conditional"
+      ],
+      [
+        "Top strip (2.5px)",
+        "Column colour \u2014 changes as task moves between columns",
+        "Always visible"
+      ],
+      [
+        "Background tint",
+        "Member's colour at 5% opacity. Done column: green tint overrides.",
+        "Always visible"
+      ],
+      [
+        "Category tag",
+        "Grey monospace label (Product, Tech, etc.)",
+        "Always visible"
+      ],
+      [
+        "State pill",
+        "Pending / Rejected / Done \u2014 coloured pill",
+        "Only when task has a state"
+      ],
+      [
+        "Hover actions",
+        "Move (\u21c4), Edit (\u270e), Delete (\ud83d\uddd1) \u2014 appear on hover",
+        "Creator only, hover state"
+      ],
+      [
+        "Title",
+        "Task title. Strikethrough + grey when Done.",
+        "Always visible"
+      ],
+      [
+        "Blocker note",
+        "Red italic text in red-tinted box with red left border",
+        "Only if blocker is set"
+      ],
+      [
+        "Owner avatar",
+        "Member's assigned colour. Shows initials.",
+        "Always visible"
+      ],
+      [
+        "Owner name",
+        "Member's first name in small grey text",
+        "Always visible"
+      ],
+      [
+        "Due date",
+        "Grey mono text. Orange+bold if within 48hrs. Red+bold if overdue.",
+        "If due date is set"
+      ],
+      [
+        "Done opacity",
+        "0.7 opacity on entire card when task is in Done column",
+        "Done column only"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "5.5  Nav Bar Elements"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Element",
+        "Behaviour"
+      ],
+      [
+        "Logo",
+        "Workspace logo + name. Click \u2192 goes to board root."
+      ],
+      [
+        "North Star Pill",
+        "Orange pill. Shows goal text. Click \u2192 opens North Star modal."
+      ],
+      [
+        "Monday Sync",
+        "Grey pill with green dot. Click \u2192 opens Monday Sync modal for weekly check-in."
+      ],
+      [
+        "Notifications Bell",
+        "Icon button. Orange pip shows unread count. Click \u2192 opens notification dropdown."
+      ],
+      [
+        "Avatar",
+        "Member's assigned colour. Shows initials. Click \u2192 profile/mode toggle menu."
+      ],
+      [
+        "Settings Gear",
+        "Icon button. Click \u2192 slides open Settings drawer from right."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "6. Task Lifecycle"
+  },
+  {
+    "type": "paragraph",
+    "text": "6.1  Creator Task Flow"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tasks created by a Creator bypass approval and appear directly on the board."
+  },
+  {
+    "type": "paragraph",
+    "text": "Creator clicks \"+ Add Task\" on any column \u2192 Add Task modal opens"
+  },
+  {
+    "type": "paragraph",
+    "text": "Fills: Title (required), Category, Owner, Due Date, Urgency flag, Blocker note (optional)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Clicks \"Add Task\" \u2192 task appears immediately in the selected column"
+  },
+  {
+    "type": "paragraph",
+    "text": "Creator can move task via drag or Move modal \u2192 card top strip updates to new column colour"
+  },
+  {
+    "type": "paragraph",
+    "text": "Creator marks Done \u2192 card tint switches to green, title gets strikethrough, opacity drops to 0.7, confetti fires"
+  },
+  {
+    "type": "paragraph",
+    "text": "6.2  Co-Creator Task Flow"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tasks from Co-Creators require Creator approval before appearing on the main board."
+  },
+  {
+    "type": "paragraph",
+    "text": "Co-Creator submits task \u2192 goes to Pending Tray (only Creators see this tray)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Creator gets notification: \"New task pending approval from [name]\""
+  },
+  {
+    "type": "paragraph",
+    "text": "Creator opens Pending Tray \u2192 sees task with Approve / Reject buttons"
+  },
+  {
+    "type": "paragraph",
+    "text": "APPROVE \u2192 task moves to To Do column on board. Co-Creator gets notification."
+  },
+  {
+    "type": "paragraph",
+    "text": "REJECT (with reason required) \u2192 task returns to Co-Creator view marked Rejected. Notification sent."
+  },
+  {
+    "type": "paragraph",
+    "text": "Co-Creator can edit and resubmit a rejected task"
+  },
+  {
+    "type": "paragraph",
+    "text": "6.3  Creator-as-Co-Creator Task Flow"
+  },
+  {
+    "type": "paragraph",
+    "text": "A Creator can toggle to Co-Creator mode for the current session from the avatar menu."
+  },
+  {
+    "type": "paragraph",
+    "text": "All tasks submitted in this mode go to Pending Tray just like Co-Creator tasks"
+  },
+  {
+    "type": "paragraph",
+    "text": "Any other active Creator in the workspace can approve/reject these tasks"
+  },
+  {
+    "type": "paragraph",
+    "text": "The submitting Creator cannot approve their own tasks in this session"
+  },
+  {
+    "type": "paragraph",
+    "text": "Mode reverts to Creator on page reload \u2014 it is session-only, never permanent"
+  },
+  {
+    "type": "paragraph",
+    "text": "6.4  Full Task Fields Reference"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Field",
+        "Type",
+        "Required",
+        "Notes"
+      ],
+      [
+        "id",
+        "UUID",
+        "Auto",
+        "Primary key"
+      ],
+      [
+        "workspace_id",
+        "UUID FK",
+        "Yes",
+        "Links task to workspace for RLS scoping"
+      ],
+      [
+        "title",
+        "Text",
+        "Yes",
+        "Max 200 characters"
+      ],
+      [
+        "category",
+        "Text",
+        "No",
+        "Product / Tech / Design / Marketing / Ops / Finance"
+      ],
+      [
+        "column",
+        "Enum",
+        "Yes",
+        "todo | doing | done | blocked"
+      ],
+      [
+        "section",
+        "Text",
+        "No",
+        "Optional section label within column"
+      ],
+      [
+        "assigned_to",
+        "UUID FK",
+        "No",
+        "References users.id"
+      ],
+      [
+        "due_date",
+        "Date",
+        "No",
+        "ISO date. Used for urgency calculation."
+      ],
+      [
+        "is_urgent",
+        "Boolean",
+        "No",
+        "Manual flag. Shown as red \"!\" on card."
+      ],
+      [
+        "blocker_note",
+        "Text",
+        "No",
+        "Shown in red italic box on card if set"
+      ],
+      [
+        "status",
+        "Enum",
+        "Yes",
+        "active | pending | rejected | done"
+      ],
+      [
+        "rejection_reason",
+        "Text",
+        "Conditional",
+        "Required when status = rejected"
+      ],
+      [
+        "submitted_by",
+        "UUID FK",
+        "No",
+        "Set when created by Co-Creator or Creator-as-Co-Creator"
+      ],
+      [
+        "approved_by",
+        "UUID FK",
+        "No",
+        "Set when Creator approves a pending task"
+      ],
+      [
+        "created_at",
+        "Timestamp",
+        "Auto",
+        "UTC"
+      ],
+      [
+        "updated_at",
+        "Timestamp",
+        "Auto",
+        "Updated on any field change"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "7. Notifications & Realtime"
+  },
+  {
+    "type": "paragraph",
+    "text": "7.1  Realtime Sync Channels"
+  },
+  {
+    "type": "paragraph",
+    "text": "All realtime sync is handled via Supabase Realtime. Every channel is scoped to workspace_id to prevent cross-tenant data leakage."
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Channel",
+        "Table",
+        "Events",
+        "Who Listens"
+      ],
+      [
+        "wf-tasks",
+        "tasks",
+        "INSERT, UPDATE, DELETE",
+        "All workspace members"
+      ],
+      [
+        "wf-pending",
+        "tasks (status=pending)",
+        "INSERT, UPDATE",
+        "Creators only"
+      ],
+      [
+        "wf-users",
+        "users, pending_members",
+        "INSERT, UPDATE",
+        "All workspace members"
+      ],
+      [
+        "wf-settings",
+        "settings",
+        "UPDATE",
+        "All workspace members"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "7.2  Notification Triggers"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Trigger",
+        "Recipient",
+        "Message"
+      ],
+      [
+        "Task submitted for approval",
+        "All Creators",
+        "\"[Name] submitted a task: [title]\""
+      ],
+      [
+        "Task approved",
+        "Submitter",
+        "\"Your task [title] was approved\""
+      ],
+      [
+        "Task rejected",
+        "Submitter",
+        "\"Your task [title] was rejected: [reason]\""
+      ],
+      [
+        "Task moved to Blocked",
+        "Task owner",
+        "\"Your task [title] is now blocked\""
+      ],
+      [
+        "New member requests to join",
+        "All Creators",
+        "\"[Name] requested to join as [role]\""
+      ],
+      [
+        "Monday Sync completed",
+        "All members",
+        "\"Week sync recorded. Team is aligned.\""
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "7.3  Notification UI Rules"
+  },
+  {
+    "type": "paragraph",
+    "text": "Stored in localStorage. Maximum 20 notifications shown."
+  },
+  {
+    "type": "paragraph",
+    "text": "Bell icon shows orange pip with unread count when count > 0"
+  },
+  {
+    "type": "paragraph",
+    "text": "Clicking bell opens dropdown \u2014 shows all unread first, then read (greyed out)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Clicking a notification marks it as read and navigates to relevant context"
+  },
+  {
+    "type": "paragraph",
+    "text": "\"Mark all read\" button clears the orange pip"
+  },
+  {
+    "type": "paragraph",
+    "text": "8. Settings & Configuration"
+  },
+  {
+    "type": "paragraph",
+    "text": "Settings drawer slides in from the right side. 6 tabs. Overlay on board \u2014 board is still visible behind a dark scrim."
+  },
+  {
+    "type": "paragraph",
+    "text": "8.1  Settings Tabs"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Tab",
+        "Access",
+        "Content"
+      ],
+      [
+        "Sprint",
+        "All Creators",
+        "Edit sprint name, start/end dates, North Star goal. Save button. Changes sync realtime."
+      ],
+      [
+        "Branding",
+        "Founding Creator only",
+        "Change workspace name, upload new logo, change accent colour. Preview updates live."
+      ],
+      [
+        "Invites",
+        "All Creators",
+        "Generate and copy invite links by role. Option to regenerate (invalidates old token)."
+      ],
+      [
+        "Team",
+        "All Creators",
+        "View all members. See their role, status dot, task count. Approve/decline pending members."
+      ],
+      [
+        "Milestones",
+        "All Creators",
+        "Add, edit, delete sprint milestones with target dates. Progress shown as % bar."
+      ],
+      [
+        "Billing",
+        "Founding Creator only",
+        "Shows current plan. Button to open Stripe Customer Portal in new tab."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "8.2  Modals Reference"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Modal",
+        "Trigger",
+        "Fields / Actions"
+      ],
+      [
+        "Add Task",
+        "+ Add Task button on any column",
+        "Title, Category, Owner, Due Date, Urgent flag, Blocker note \u2014 Cancel | Add Task"
+      ],
+      [
+        "Edit Task",
+        "Edit (\u270e) action on task card",
+        "Same fields as Add Task pre-filled \u2014 Cancel | Save Changes"
+      ],
+      [
+        "Move Task",
+        "Move (\u21c4) action on task card",
+        "Column selector (4 options) \u2014 Cancel | Move"
+      ],
+      [
+        "Blocker",
+        "Set Blocker action on card",
+        "Blocker text area (required) \u2014 Cancel | Set Blocker"
+      ],
+      [
+        "Delete Task",
+        "Delete (\ud83d\uddd1) action on card",
+        "Confirmation: \"This cannot be undone\" \u2014 Cancel | Delete"
+      ],
+      [
+        "Reject Task",
+        "Reject button in Pending Tray",
+        "Rejection reason (required, min 10 chars) \u2014 Cancel | Reject"
+      ],
+      [
+        "North Star",
+        "North Star pill in nav",
+        "Shows goal. Edit inline. Save. Sprint progress bar."
+      ],
+      [
+        "Monday Sync",
+        "Monday Sync pill in nav",
+        "Weekly check-in form: wins, blockers, focus. Submit button."
+      ],
+      [
+        "Notifications",
+        "Bell icon in nav",
+        "Dropdown list. Mark read. Timestamp. Navigate to context."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "9. Database Schema"
+  },
+  {
+    "type": "paragraph",
+    "text": "All workspace-scoped tables include workspace_id as a foreign key. Row Level Security (RLS) is enabled on all tables. Realtime is enabled on: tasks, users, pending_members, settings."
+  },
+  {
+    "type": "paragraph",
+    "text": "9.1  Tables Overview"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Table",
+        "Purpose",
+        "Key Columns"
+      ],
+      [
+        "accounts",
+        "Supabase Auth user record",
+        "id, email, email_verified, created_at"
+      ],
+      [
+        "workspaces",
+        "One per workspace/team",
+        "id, name, logo_url, brand_color, founding_creator_id"
+      ],
+      [
+        "invite_links",
+        "Role-scoped invite tokens",
+        "id, workspace_id, role, token (UUID), expires_at, is_active"
+      ],
+      [
+        "users",
+        "Workspace member records",
+        "id, workspace_id, account_id, name, role, member_color, status, created_at"
+      ],
+      [
+        "pending_members",
+        "Join requests awaiting approval",
+        "id, workspace_id, name, email, role, token_used, status, reviewed_by"
+      ],
+      [
+        "tasks",
+        "All sprint tasks",
+        "id, workspace_id, title, category, column, status, assigned_to, due_date, is_urgent, blocker_note, submitted_by, approved_by"
+      ],
+      [
+        "milestones",
+        "Sprint milestones",
+        "id, workspace_id, title, target_date, is_complete"
+      ],
+      [
+        "settings",
+        "Workspace sprint config",
+        "id, workspace_id, sprint_name, sprint_start, sprint_end, north_star, monday_sync_notes"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "9.2  RLS Policy Rules"
+  },
+  {
+    "type": "paragraph",
+    "text": "SELECT: Any authenticated user whose users.workspace_id matches the row's workspace_id"
+  },
+  {
+    "type": "paragraph",
+    "text": "INSERT: Authenticated user must be a Creator in the workspace (users.role = 'creator')"
+  },
+  {
+    "type": "paragraph",
+    "text": "UPDATE: Creator can update any row. Co-Creator can only update tasks they own (submitted_by = auth.uid())"
+  },
+  {
+    "type": "paragraph",
+    "text": "DELETE: Creator only. Co-Creator and Observer cannot delete any row."
+  },
+  {
+    "type": "paragraph",
+    "text": "Special: tasks with status = 'pending' \u2014 only Creators can read them via wf-pending channel"
+  },
+  {
+    "type": "paragraph",
+    "text": "9.3  Key Relationships"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Foreign Key",
+        "References",
+        "On Delete"
+      ],
+      [
+        "workspaces.founding_creator_id",
+        "accounts.id",
+        "RESTRICT"
+      ],
+      [
+        "users.workspace_id",
+        "workspaces.id",
+        "CASCADE"
+      ],
+      [
+        "users.account_id",
+        "accounts.id",
+        "CASCADE"
+      ],
+      [
+        "invite_links.workspace_id",
+        "workspaces.id",
+        "CASCADE"
+      ],
+      [
+        "tasks.workspace_id",
+        "workspaces.id",
+        "CASCADE"
+      ],
+      [
+        "tasks.assigned_to",
+        "users.id",
+        "SET NULL"
+      ],
+      [
+        "tasks.submitted_by",
+        "users.id",
+        "SET NULL"
+      ],
+      [
+        "tasks.approved_by",
+        "users.id",
+        "SET NULL"
+      ],
+      [
+        "milestones.workspace_id",
+        "workspaces.id",
+        "CASCADE"
+      ],
+      [
+        "settings.workspace_id",
+        "workspaces.id",
+        "CASCADE"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "10. Design System"
+  },
+  {
+    "type": "paragraph",
+    "text": "10.1  Colour Tokens"
+  },
+  {
+    "type": "paragraph",
+    "text": "Five colour groups. Each has a specific job. No decorative colours."
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Group",
+        "Colours",
+        "Usage Rule"
+      ],
+      [
+        "Monochrome",
+        "Ink 100\u219220 (5 shades of black), Sur 00\u219204 (5 surfaces), 3 border weights",
+        "Text, surfaces, borders, structure. Default for everything."
+      ],
+      [
+        "Brand / Doing",
+        "#F36B21 at 100%, 16%, 8%, 4%",
+        "Primary CTA buttons. Doing column. North Star pill. Active sprint badge. Focus rings on inputs."
+      ],
+      [
+        "Column Semantic",
+        "Blue #0A84FF | Orange #F36B21 | Green #28A745 | Red #DC3545",
+        "One colour per column. Used for: header dot, count badge, card top strip, stat card top border and number."
+      ],
+      [
+        "Standard UI",
+        "Red = errors, Green = success / approve",
+        "Form validation, button variants for Approve/Reject, consistent with column semantics."
+      ],
+      [
+        "Member Palette",
+        "8 fixed colours (terracotta, blue, purple, green, amber, rose, teal, brown)",
+        "Avatar fill + 5% card background tint. Done column always overrides tint to green."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "10.2  Typography"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Style",
+        "Font",
+        "Weight",
+        "Size",
+        "Usage"
+      ],
+      [
+        "Display",
+        "Montserrat",
+        "900",
+        "38px",
+        "Hero titles, page headings"
+      ],
+      [
+        "Heading 1",
+        "Montserrat",
+        "900",
+        "24px",
+        "Section titles"
+      ],
+      [
+        "Heading 2",
+        "Montserrat",
+        "800",
+        "18px",
+        "Subsection titles"
+      ],
+      [
+        "Heading 3",
+        "Montserrat",
+        "700",
+        "14px",
+        "Component headers"
+      ],
+      [
+        "Body",
+        "Montserrat",
+        "500",
+        "13px",
+        "General content text"
+      ],
+      [
+        "Caption",
+        "Montserrat",
+        "600",
+        "11px",
+        "Secondary info, meta"
+      ],
+      [
+        "Eyebrow",
+        "Montserrat",
+        "800",
+        "8px",
+        "Section labels (all caps, +2px tracking)"
+      ],
+      [
+        "Mono Meta",
+        "Space Mono",
+        "400",
+        "9px",
+        "Dates, IDs, codes, metadata"
+      ],
+      [
+        "Mono Strong",
+        "Space Mono",
+        "700",
+        "9px",
+        "Column state labels (TO DO, DOING, DONE, BLOCKED)"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "10.3  Design Rules"
+  },
+  {
+    "type": "paragraph",
+    "text": "Only ONE primary (orange) button per screen \u2014 the eye must know immediately where to click"
+  },
+  {
+    "type": "paragraph",
+    "text": "Category tags (Product, Tech, Design) are ALWAYS grey \u2014 never coloured to avoid clashing with column colours"
+  },
+  {
+    "type": "paragraph",
+    "text": "Done column ALWAYS overrides member card tint to green \u2014 completion > ownership signal"
+  },
+  {
+    "type": "paragraph",
+    "text": "Red is ONLY for: errors, blocked tasks, rejected tasks, overdue dates \u2014 never decorative"
+  },
+  {
+    "type": "paragraph",
+    "text": "Green is ONLY for: done tasks, success states, approve buttons \u2014 never decorative"
+  },
+  {
+    "type": "paragraph",
+    "text": "Member colour palette is desaturated by design \u2014 must not compete with column semantic colours"
+  },
+  {
+    "type": "paragraph",
+    "text": "Spacing base unit: 4px. All gaps, padding, margins are multiples of 4."
+  },
+  {
+    "type": "paragraph",
+    "text": "Border radius: 8px standard, 10px for cards and columns, 20px for pills and chips"
+  },
+  {
+    "type": "paragraph",
+    "text": "11. Pricing & Plans"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Feature",
+        "Free",
+        "Pro \u2014 \u20b9499/mo",
+        "Team \u2014 \u20b9999/mo"
+      ],
+      [
+        "Team members",
+        "3 seats",
+        "10 seats",
+        "Unlimited"
+      ],
+      [
+        "Kanban board (4 columns)",
+        "Yes",
+        "Yes",
+        "Yes"
+      ],
+      [
+        "Task creation & management",
+        "Yes",
+        "Yes",
+        "Yes"
+      ],
+      [
+        "Sprint settings & milestones",
+        "Yes",
+        "Yes",
+        "Yes"
+      ],
+      [
+        "Monday Sync",
+        "Yes",
+        "Yes",
+        "Yes"
+      ],
+      [
+        "Realtime sync",
+        "Yes",
+        "Yes",
+        "Yes"
+      ],
+      [
+        "Custom workspace branding",
+        "No",
+        "Yes",
+        "Yes"
+      ],
+      [
+        "Role-specific invite links",
+        "No",
+        "Yes",
+        "Yes"
+      ],
+      [
+        "Observer role",
+        "No",
+        "Yes",
+        "Yes"
+      ],
+      [
+        "Pending task approval workflow",
+        "No",
+        "Yes",
+        "Yes"
+      ],
+      [
+        "Sprint analytics dashboard",
+        "No",
+        "No",
+        "Yes"
+      ],
+      [
+        "Sprint archive & history",
+        "No",
+        "No",
+        "Yes"
+      ],
+      [
+        "Priority support",
+        "No",
+        "No",
+        "Yes"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "BILLING MECHANICS"
+  },
+  {
+    "type": "paragraph",
+    "text": "Stripe handles all payment processing. No card data touches WeFlow servers."
+  },
+  {
+    "type": "paragraph",
+    "text": "Founding Creator is the billing owner. Only they can access the Billing tab."
+  },
+  {
+    "type": "paragraph",
+    "text": "Downgrade: excess members become read-only until removed or plan upgraded."
+  },
+  {
+    "type": "paragraph",
+    "text": "Annual billing available at 2 months free (Pro: \u20b94,990/yr, Team: \u20b99,990/yr)"
+  },
+  {
+    "type": "paragraph",
+    "text": "12. Deployment Stack"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Layer",
+        "Service",
+        "Purpose"
+      ],
+      [
+        "Frontend",
+        "Netlify",
+        "Static hosting. Drag-and-drop deploy. Edge CDN."
+      ],
+      [
+        "Backend",
+        "Supabase",
+        "Postgres DB, Auth, Realtime, Storage, Edge Functions, RLS."
+      ],
+      [
+        "Payments",
+        "Stripe",
+        "Subscription management, Customer Portal, webhooks for plan changes."
+      ],
+      [
+        "Email",
+        "Resend",
+        "Transactional email: OTP, invite notifications, welcome, reject."
+      ],
+      [
+        "Storage",
+        "Supabase Storage",
+        "Workspace logo uploads. Public bucket. Max 2MB per file."
+      ],
+      [
+        "Fonts",
+        "Google Fonts CDN",
+        "Montserrat (all weights) + Space Mono. Loaded as sync script tag."
+      ],
+      [
+        "Supabase JS",
+        "CDN UMD bundle",
+        "MUST load as synchronous script tag using /dist/umd/supabase.min.js \u2014 ES module and dynamic injection fail."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "CURRENT DEPLOYMENT"
+  },
+  {
+    "type": "paragraph",
+    "text": "Live URL (V4): magnificent-basbousa-2abb83.netlify.app"
+  },
+  {
+    "type": "paragraph",
+    "text": "Site ID: c60317ff-4fa2-4dd8-bca9-b20d0bd36875"
+  },
+  {
+    "type": "paragraph",
+    "text": "Supabase Project: mfozrrpzypcbipinmsul"
+  },
+  {
+    "type": "paragraph",
+    "text": "V5 will be deployed as a new Netlify site with separate Supabase project for clean multi-tenant schema"
+  },
+  {
+    "type": "paragraph",
+    "text": "13. Changes From V4"
+  },
+  {
+    "type": "paragraph",
+    "text": "Removed from V4"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "V4 Feature",
+        "Reason for Removal"
+      ],
+      [
+        "CEO / Executor mode toggle + mode pill",
+        "Replaced by Creator / Co-Creator role system \u2014 more flexible, role-based"
+      ],
+      [
+        "Zoom bar (Alt+Z)",
+        "Not needed in SaaS context. Removed with mode system."
+      ],
+      [
+        "Entry screen with two-button split",
+        "Replaced by standard email+password login/signup page"
+      ],
+      [
+        "Workspace PIN authentication",
+        "Replaced by Supabase Auth (email + OTP)"
+      ],
+      [
+        "Hardcoded InHive logo and branding",
+        "Dynamic workspace branding via onboarding wizard"
+      ],
+      [
+        "FTF Series, Portfolio, Product Log sidebar links",
+        "InHive-specific \u2014 removed for SaaS generalisability"
+      ],
+      [
+        "Single-workspace architecture",
+        "Full multi-tenant DB with workspace_id scoping and RLS"
+      ],
+      [
+        "CSS glassmorphism / dark theme",
+        "Clean light theme per new design system"
+      ],
+      [
+        "#07070f dark background",
+        "Replaced by white/light grey surface system"
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "New in V5"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "V5 Feature",
+        "Description"
+      ],
+      [
+        "Email + Password + OTP Auth",
+        "Full Supabase Auth flow with email verification"
+      ],
+      [
+        "3-Step Onboarding Wizard",
+        "Brand \u2192 Sprint \u2192 Invite. Runs once per workspace."
+      ],
+      [
+        "Multi-tenant DB architecture",
+        "workspace_id on all tables, RLS enforced, 4 realtime channels"
+      ],
+      [
+        "Role-specific invite link tokens",
+        "UUID tokens per role. Separate Creator, Co-Creator, Observer links."
+      ],
+      [
+        "Pending Tray + approval workflow",
+        "Co-Creator tasks go to Pending Tray \u2192 Creator approves/rejects with reason"
+      ],
+      [
+        "Creator-as-Co-Creator toggle",
+        "Session-only mode toggle from avatar menu. Reverts on reload."
+      ],
+      [
+        "Observer role",
+        "Read-only workspace access for stakeholders and clients"
+      ],
+      [
+        "Stripe Billing integration",
+        "Subscription portal. Founding Creator only. Plan enforcement."
+      ],
+      [
+        "Dynamic workspace branding",
+        "Name, logo, accent colour \u2014 set in wizard, editable in Branding settings tab"
+      ],
+      [
+        "Semantic column colour system",
+        "Blue/Orange/Green/Red per column. Member palette for identity."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "14. Future Backlog"
+  },
+  {
+    "type": "table",
+    "data": [
+      [
+        "Priority",
+        "Feature",
+        "Description"
+      ],
+      [
+        "P1",
+        "Shadow PM \u2014 Agentic AI",
+        "AI that reads the board and chat, auto-suggests blockers, suggests task reordering, writes weekly summaries"
+      ],
+      [
+        "P1",
+        "Mobile responsive layout",
+        "Full mobile breakpoint \u2014 board switches to vertical scroll, single column view"
+      ],
+      [
+        "P1",
+        "Email notifications",
+        "Resend-powered emails for all notification triggers (not just in-app)"
+      ],
+      [
+        "P2",
+        "Sprint archive & history",
+        "Archive completed sprints. View past boards with full task history."
+      ],
+      [
+        "P2",
+        "Velocity chart",
+        "Per-member and team-wide task completion trend over sprints"
+      ],
+      [
+        "P2",
+        "Task comments",
+        "Thread-style comments on each task card. Mentions with @name."
+      ],
+      [
+        "P2",
+        "Board filters",
+        "Filter board by: owner, category, due date range, urgency flag"
+      ],
+      [
+        "P2",
+        "Custom domain",
+        "workspace.weflow.app subdomain routing per workspace"
+      ],
+      [
+        "P3",
+        "Sprint retrospective",
+        "Structured retro form at sprint end. Stores results in DB."
+      ],
+      [
+        "P3",
+        "In-chat project management",
+        "Real-time workspace chat with task tagging and delegation from chat"
+      ],
+      [
+        "P3",
+        "API access",
+        "Read/write API for workspace data. Token-based auth. For integrations."
+      ],
+      [
+        "P3",
+        "Zapier / Make integration",
+        "Trigger Zaps on task state changes. Connect with external tools."
+      ]
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "WeFlow V5 PRD \u2014 End of Document"
+  },
+  {
+    "type": "paragraph",
+    "text": "Think Beyond, Create Impact"
+  }
+]

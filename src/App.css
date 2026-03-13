@@ -1,0 +1,8 @@
+.app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--sur-01);
+}
+
+/* Global modal shared styles are in index.css */
