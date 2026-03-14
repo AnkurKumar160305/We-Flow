@@ -50,9 +50,12 @@ const AppContent = () => {
     return <JoinPage token={getJoinToken()} />;
   }
 
-  // Not logged in
+  // Not logged in or just bypassed OTP
   if (!user) {
     if (otpPending) {
+      if (otpPending.verified) {
+        return <OnboardingWizard signupName={otpPending.name} />;
+      }
       return (
         <OtpPage
           email={otpPending.email}
