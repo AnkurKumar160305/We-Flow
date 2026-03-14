@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 const AuthPage = () => {
   const [tab, setTab] = useState('login'); // 'login' | 'signup'
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -23,7 +24,12 @@ const AuthPage = () => {
       } else {
         const { error } = await supabase.auth.signUp({
           email,
-          password
+          password,
+          options: {
+            data: {
+              full_name: name,
+            }
+          }
         });
         if (error) throw error;
         // Optional: you can show a success message here if email confirmation is required,
@@ -65,6 +71,21 @@ const AuthPage = () => {
               placeholder="you@example.com"
             />
           </div>
+
+          {tab === 'signup' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontSize: '14px', fontWeight: 500, color: 'var(--ink-80)' }}>Full Name</label>
+              <input 
+                type="text" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                style={{ padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--ink-20)', fontSize: '14px' }}
+                placeholder="John Doe"
+              />
+            </div>
+          )}
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label style={{ fontSize: '14px', fontWeight: 500, color: 'var(--ink-80)' }}>Password</label>
             <input 

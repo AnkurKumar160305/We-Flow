@@ -8,8 +8,9 @@ const STEPS = ['Brand', 'Sprint', 'Invite'];
 
 const COLORS = ['#F36B21', '#0A84FF', '#28A745', '#DC3545', '#7B6BA8', '#C47B5A', '#3B8A8A', '#C49A3C'];
 
-const OnboardingWizard = ({ signupName }) => {
+const OnboardingWizard = ({ signupName: propSignupName }) => {
   const { user, createWorkspace, createUserProfile, createSettings, workspace } = useAuth();
+  const signupName = propSignupName || user?.user_metadata?.full_name;
   const [step, setStep] = useState(0); // 0,1,2
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
