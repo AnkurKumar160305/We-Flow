@@ -64,22 +64,25 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session: s } }) => {
-      setSession(s);
-      setUser(s?.user ?? null);
-      if (s?.user) {
-        fetchWorkspaceData(s.user);
+    // Check active session on mount
+    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+      setSession(currentSession);
+      if (currentSession?.user) {
+        setUser(currentSession.user);
+        fetchWorkspaceData(currentSession.user);
       } else {
         setLoading(false);
       }
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
-      setSession(s);
-      setUser(s?.user ?? null);
-      if (s?.user) {
-        fetchWorkspaceData(s.user);
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+      if (newSession?.user) {
+        setUser(newSession.user);
+        fetchWorkspaceData(newSession.user);
       } else {
+        setUser(null);
         setProfile(null);
         setWorkspace(null);
         setSettings(null);
@@ -91,28 +94,9 @@ export const AuthProvider = ({ children }) => {
     return () => subscription.unsubscribe();
   }, [fetchWorkspaceData]);
 
-  const signUp = async (email, password) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
-    });
-    return { data, error };
-  };
-
-  const signIn = async (email, password) => {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    return { data, error };
-  };
-
   const signOut = async () => {
     await supabase.auth.signOut();
     setActingAsCoCreator(false);
-  };
-
-  const verifyOtp = async (email, token) => {
-    const { data, error } = await supabase.auth.verifyOtp({ email, token, type: 'email' });
-    return { data, error };
   };
 
   const createWorkspace = async ({ name, logoUrl, brandColor }) => {
@@ -218,7 +202,7 @@ export const AuthProvider = ({ children }) => {
       session, user, profile, workspace, settings, members,
       loading, actingAsCoCreator, effectiveRole,
       isCreator, isFoundingCreator, isMissingWorkspace,
-      signUp, signIn, signOut, verifyOtp,
+      signOut,
       createWorkspace, createUserProfile, createSettings,
       updateSettings, updateWorkspace, refreshMembers,
       toggleCoCreatorMode,
@@ -229,4 +213,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+export const useLocationAuth = () => useContext(AuthContext); // temp fallback name
 export const useAuth = () => useContext(AuthContext);
+export const useWorkspaceAuth = () => useContext(AuthContext);

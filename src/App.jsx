@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { AuthProvider, useAuth } from './context/AuthContext';
+
+import { AuthProvider, useWorkspaceAuth } from './context/AuthContext';
 import AuthPage from './pages/AuthPage';
-import OtpPage from './pages/OtpPage';
 import OnboardingWizard from './pages/OnboardingWizard';
 import Navbar from './components/Navbar/Navbar';
 import KanbanBoard from './components/Board/KanbanBoard';
@@ -17,10 +17,9 @@ import './index.css';
 const isJoinRoute = () => window.location.pathname.startsWith('/join/');
 const getJoinToken = () => window.location.pathname.replace('/join/', '');
 
-/* Inner app — receives auth context */
+/* Inner app — receives workspace context */
 const AppContent = () => {
-  const { user, profile, workspace, loading, isMissingWorkspace } = useAuth();
-  const [otpPending, setOtpPending] = useState(null); // { email, name }
+  const { user, profile, workspace, loading, isMissingWorkspace } = useWorkspaceAuth();
   const [showSettings, setShowSettings] = useState(false);
   const [showNorthStar, setShowNorthStar] = useState(false);
   const [showMondaySync, setShowMondaySync] = useState(false);
@@ -50,55 +49,33 @@ const AppContent = () => {
     return <JoinPage token={getJoinToken()} />;
   }
 
-  // Not logged in or just bypassed OTP
-  if (!user) {
-    if (otpPending) {
-      if (otpPending.verified) {
-        return <OnboardingWizard signupName={otpPending.name} />;
-      }
-      return (
-        <OtpPage
-          email={otpPending.email}
-          name={otpPending.name}
-          onBack={() => setOtpPending(null)}
-          onVerified={(info) => {
-            // After OTP verified, onboarding wizard opens
-            setOtpPending({ ...otpPending, verified: true, name: info.name });
-          }}
-        />
-      );
-    }
-    return <AuthPage onOtpRequired={(info) => setOtpPending(info)} />;
-  }
-
-  // Logged in but OTP just verified — show onboarding
-  if (otpPending?.verified) {
-    return <OnboardingWizard signupName={otpPending.name} />;
-  }
-
-  // Logged in, no workspace/profile yet — onboarding
-  if (isMissingWorkspace) {
-    return <OnboardingWizard signupName={user.email?.split('@')[0]} />;
-  }
-
-  // Full board view
   return (
-    <div className="app-root">
-      <Navbar
-        onOpenSettings={() => setShowSettings(true)}
-        notifications={notifications}
-        onClearNotifications={clearNotifications}
-        onMondaySync={() => setShowMondaySync(true)}
-      />
-
-      <KanbanBoard addNotification={addNotification} />
-
-      <AnimatePresence>
-        {showSettings && <SettingsDrawer key="settings" onClose={() => setShowSettings(false)} />}
-        {showNorthStar && <NorthStarModal key="northstar" onClose={() => setShowNorthStar(false)} />}
-        {showMondaySync && <MondaySyncModal key="mondaysync" onClose={() => setShowMondaySync(false)} />}
-      </AnimatePresence>
-    </div>
+    <>
+      {!user ? (
+        <AuthPage />
+      ) : (
+        <>
+          {isMissingWorkspace ? (
+            <OnboardingWizard />
+          ) : (
+            <div className="app-root">
+              <Navbar
+                onOpenSettings={() => setShowSettings(true)}
+                notifications={notifications}
+                onClearNotifications={clearNotifications}
+                onMondaySync={() => setShowMondaySync(true)}
+              />
+              <KanbanBoard addNotification={addNotification} />
+              <AnimatePresence>
+                {showSettings && <SettingsDrawer key="settings" onClose={() => setShowSettings(false)} />}
+                {showNorthStar && <NorthStarModal key="northstar" onClose={() => setShowNorthStar(false)} />}
+                {showMondaySync && <MondaySyncModal key="mondaysync" onClose={() => setShowMondaySync(false)} />}
+              </AnimatePresence>
+            </div>
+          )}
+        </>
+      )}
+    </>
   );
 };
 

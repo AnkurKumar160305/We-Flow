@@ -1,108 +1,108 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
-const AuthPage = ({ onOtpRequired }) => {
-  const { signIn, signUp } = useAuth();
+const AuthPage = () => {
   const [tab, setTab] = useState('login'); // 'login' | 'signup'
-  const [form, setForm] = useState({ email: '', password: '', name: '' });
-  const [showPw, setShowPw] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [pendingEmail, setPendingEmail] = useState('');
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleLogin = async e => {
+  const handleAuth = async (e) => {
     e.preventDefault();
-    setError(''); setLoading(true);
-    const { error: err } = await signIn(form.email, form.password);
-    setLoading(false);
-    if (err) setError(err.message);
-  };
+    setLoading(true);
+    setError('');
 
-  const handleSignup = async e => {
-    e.preventDefault();
-    setError(''); setLoading(true);
-    if (form.password.length < 8) {
-      setError('Password must be at least 8 characters.'); setLoading(false); return;
+    try {
+      if (tab === 'login') {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password
+        });
+        if (error) throw error;
+        // Optional: you can show a success message here if email confirmation is required,
+        // but if confirmation is disabled this will log them right in.
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-    const { error: err } = await signUp(form.email, form.password);
-    setLoading(false);
-    if (err) { setError(err.message); return; }
-    setPendingEmail(form.email);
-    onOtpRequired({ email: form.email, name: form.name });
   };
 
   return (
     <div className="auth-page">
-      <div className="auth-card">
-        <div className="auth-logo">We<span>Flow</span> <sup style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink-40)' }}>V5</sup></div>
-        <p className="auth-tagline">Sprint Management OS for creative teams</p>
+      <div className="auth-card" style={{ padding: '40px 32px' }}>
+        <div className="auth-logo" style={{ marginBottom: 12 }}>We<span style={{ color: 'var(--brand)' }}>Flow</span> <sup style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink-40)' }}>V5</sup></div>
+        <p className="auth-tagline" style={{ marginBottom: 32 }}>Sprint Management OS for creative teams</p>
 
-        <div className="auth-tabs">
-          <button className={`auth-tab ${tab === 'login' ? 'active' : ''}`} onClick={() => setTab('login')}>
+        <div className="auth-tabs" style={{ marginBottom: 24 }}>
+          <button className={`auth-tab ${tab === 'login' ? 'active' : ''}`} type="button" onClick={() => setTab('login')}>
             Sign In
           </button>
-          <button className={`auth-tab ${tab === 'signup' ? 'active' : ''}`} onClick={() => setTab('signup')}>
+          <button className={`auth-tab ${tab === 'signup' ? 'active' : ''}`} type="button" onClick={() => setTab('signup')}>
             Create Account
           </button>
         </div>
 
-        {error && <div className="auth-error" style={{ marginBottom: 16 }}>{error}</div>}
+        <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
+          {error && <div style={{ color: 'var(--red-60)', fontSize: '13px', padding: '10px', backgroundColor: 'var(--red-10)', borderRadius: '6px' }}>{error}</div>}
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label style={{ fontSize: '14px', fontWeight: 500, color: 'var(--ink-80)' }}>Email Address</label>
+            <input 
+              type="email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              style={{ padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--ink-20)', fontSize: '14px' }}
+              placeholder="you@example.com"
+            />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label style={{ fontSize: '14px', fontWeight: 500, color: 'var(--ink-80)' }}>Password</label>
+            <input 
+              type="password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={6}
+              style={{ padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--ink-20)', fontSize: '14px' }}
+              placeholder="••••••••"
+            />
+          </div>
+          
+          <button 
+            type="submit" 
+            disabled={loading}
+            style={{ 
+              marginTop: '8px',
+              padding: '12px', 
+              borderRadius: '6px', 
+              border: 'none', 
+              backgroundColor: 'var(--brand)', 
+              color: 'white', 
+              fontSize: '14px', 
+              fontWeight: 600, 
+              cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.7 : 1,
+              transition: 'opacity 0.2s ease'
+            }}
+          >
+            {loading ? 'Processing...' : (tab === 'login' ? 'Sign In' : 'Create Account')}
+          </button>
+        </form>
 
-        {tab === 'login' ? (
-          <form className="auth-form" onSubmit={handleLogin}>
-            <div className="form-group">
-              <label className="form-label">Email</label>
-              <input name="email" type="email" className="form-input" placeholder="you@team.com" value={form.email} onChange={handleChange} required autoComplete="email" />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <div style={{ position: 'relative' }}>
-                <input name="password" type={showPw ? 'text' : 'password'} className="form-input" placeholder="Your password" value={form.password} onChange={handleChange} required style={{ width: '100%', paddingRight: 42 }} autoComplete="current-password" />
-                <button type="button" onClick={() => setShowPw(!showPw)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--ink-40)', display: 'flex' }}>
-                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
-              </div>
-            </div>
-            <button type="submit" className="btn btn-primary btn-lg btn-full" disabled={loading}>
-              {loading ? <Loader2 size={16} className="spin" /> : 'Sign In'}
-            </button>
-          </form>
-        ) : (
-          <form className="auth-form" onSubmit={handleSignup}>
-            <div className="form-group">
-              <label className="form-label">Your Name</label>
-              <input name="name" type="text" className="form-input" placeholder="Full name" value={form.name} onChange={handleChange} required />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Work Email</label>
-              <input name="email" type="email" className="form-input" placeholder="you@team.com" value={form.email} onChange={handleChange} required autoComplete="email" />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <div style={{ position: 'relative' }}>
-                <input name="password" type={showPw ? 'text' : 'password'} className="form-input" placeholder="Min 8 characters" value={form.password} onChange={handleChange} required minLength={8} style={{ width: '100%', paddingRight: 42 }} autoComplete="new-password" />
-                <button type="button" onClick={() => setShowPw(!showPw)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--ink-40)', display: 'flex' }}>
-                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
-              </div>
-            </div>
-            <button type="submit" className="btn btn-primary btn-lg btn-full" disabled={loading}>
-              {loading ? <Loader2 size={16} className="spin" /> : 'Create Account →'}
-            </button>
-            <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--ink-40)', marginTop: 4 }}>
-              We'll send a verification code to your email.
-            </p>
-          </form>
-        )}
-
-        <p style={{ textAlign: 'center', marginTop: 24, fontSize: 11, color: 'var(--ink-40)', fontWeight: 500 }}>
+        <p style={{ textAlign: 'center', marginTop: 32, fontSize: 11, color: 'var(--ink-40)', fontWeight: 500 }}>
           Think Beyond, Create Impact
         </p>
       </div>
-      <style>{`.spin { animation: spin 0.7s linear infinite; } @keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 };
