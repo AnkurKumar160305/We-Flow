@@ -8,6 +8,7 @@ const AuthPage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -22,18 +23,23 @@ const AuthPage = () => {
         });
         if (error) throw error;
       } else {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
             data: {
               full_name: name,
-            }
+            },
+            emailRedirectTo: window.location.origin,
           }
         });
         if (error) throw error;
-        // Optional: you can show a success message here if email confirmation is required,
-        // but if confirmation is disabled this will log them right in.
+        
+        if (data?.user && data?.session === null) {
+          setSuccess('Signup successful! Please check your email for a confirmation link.');
+        } else {
+          setSuccess('Signup successful! Redirecting...');
+        }
       }
     } catch (err) {
       setError(err.message);
@@ -58,7 +64,8 @@ const AuthPage = () => {
         </div>
 
         <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
-          {error && <div style={{ color: 'var(--red-60)', fontSize: '13px', padding: '10px', backgroundColor: 'var(--red-10)', borderRadius: '6px' }}>{error}</div>}
+          {error && <div style={{ color: 'var(--red-60)', fontSize: '13px', padding: '10px', backgroundColor: 'var(--red-10)', borderRadius: '6px', border: '1px solid var(--red-20)' }}>{error}</div>}
+          {success && <div style={{ color: 'var(--brand)', fontSize: '13px', padding: '10px', backgroundColor: 'rgba(var(--brand-rgb), 0.1)', borderRadius: '6px', border: '1px solid var(--brand)' }}>{success}</div>}
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label style={{ fontSize: '14px', fontWeight: 500, color: 'var(--ink-80)' }}>Email Address</label>
